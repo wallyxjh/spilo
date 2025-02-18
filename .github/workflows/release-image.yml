@@ -49,8 +49,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        registry: [ docker.io, apecloud-registry.cn-zhangjiakou.cr.aliyuncs.com, infracreate-registry.cn-zhangjiakou.cr.aliyuncs.com ]
-    runs-on: ubuntu-22.04
+        registry: [ docker.io]
+    runs-on: ubuntu-22.04actions/setup
     permissions:
       contents: 'read'
       packages: 'write'
