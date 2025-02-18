@@ -40,6 +40,8 @@ for t in deb deb-src; do
 done
 curl -s -o - https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor > /etc/apt/trusted.gpg.d/apt.postgresql.org.gpg
 
+apt-get update
+
 # Clean up
 apt-get purge -y libcap2-bin
 apt-get autoremove -y

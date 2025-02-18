@@ -71,7 +71,13 @@ apt-get install -y \
     brotli \
     libbrotli1 \
     python3.10 \
-    python3-psycopg2
+    python3-psycopg2 \
+    gdal-data \
+    libdeflate0 \
+    libgeos-c1v5 \
+    libjson-c5 \
+    libproj22 \
+    libxml2
 
 # forbid creation of a main cluster when package is installed
 sed -ri 's/#(create_main_cluster) .*$/\1 = false/' /etc/postgresql-common/createcluster.conf
@@ -197,8 +203,13 @@ done
 
 if [ "$DEMO" != "true" ]; then
     for version in $DEB_PG_SUPPORTED_VERSIONS; do
+        postgis_tmp_path="/usr/lib/postgresql/${version}/lib/postgis-2.5.so"
         # create postgis symlinks to make it possible to perform update
-        ln -s "postgis-${POSTGIS_VERSION%.*}.so" "/usr/lib/postgresql/${version}/lib/postgis-2.5.so"
+        if [ ! -e "${postgis_tmp_path}" ]; then
+            ln -s "postgis-${POSTGIS_VERSION%.*}.so" "${postgis_tmp_path}"
+        else
+            echo "postgis symlink ${postgis_tmp_path} already exists, skipping"
+        fi
     done
 fi
 
@@ -229,7 +240,36 @@ dpkg -l | grep '^rc' | awk '{print $2}' | xargs apt-get purge -y
 
 # Try to minimize size by creating symlinks instead of duplicate files
 if [ "$DEMO" != "true" ]; then
-    cd "/usr/lib/postgresql/$PGVERSION/bin"
+    PGVERSION_BIN_PATH="/usr/lib/postgresql/$PGVERSION/bin"
+    if [ -d ${PGVERSION_BIN_PATH} ]; then
+        echo "cd ${PGVERSION_BIN_PATH}"
+        cd ${PGVERSION_BIN_PATH}
+    else
+        echo "ls /usr/lib/postgresql/"
+        ls /usr/lib/postgresql/
+        PGVERSION_TMP=$(ls /usr/lib/postgresql/| grep -oE '[0-9]+'|awk 'NR==1{print $1}')
+        PGVERSION_BIN_PATH_TMP="/usr/lib/postgresql/${PGVERSION_TMP}/bin"
+        if [ -d ${PGVERSION_BIN_PATH_TMP} ]; then
+            echo "cd ${PGVERSION_BIN_PATH_TMP}"
+            cd ${PGVERSION_BIN_PATH_TMP}
+        else
+            apt-get install -y wget gnupg2
+
+            wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
+
+            DISTRIB_CODENAME=$(sed -n 's/DISTRIB_CODENAME=//p' /etc/lsb-release)
+            echo "deb http://apt.postgresql.org/pub/repos/apt/ ${DISTRIB_CODENAME}-pgdg main" > /etc/apt/sources.list.d/pgdg.list
+
+            apt-get update
+
+            apt-get install -y postgresql-$PGVERSION postgresql-client-$PGVERSION
+            if [ -d ${PGVERSION_BIN_PATH} ]; then
+                echo "cd ${PGVERSION_BIN_PATH}"
+                cd ${PGVERSION_BIN_PATH}
+            fi
+        fi
+    fi
+
     for u in clusterdb \
             pg_archivecleanup \
             pg_basebackup \
