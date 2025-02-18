@@ -17,7 +17,7 @@ on:
 
 env:
   RELEASE_VERSION: ${{ github.ref_name }}
-  IMAGE_NAME: "wallykk/spilo"
+  IMAGE_NAME: "apecloud/spilo"
   DOCKER_USER: ${{ secrets.DOCKER_REGISTRY_USER }}
   DOCKER_PASSWORD: ${{ secrets.DOCKER_REGISTRY_PASSWORD }}
   ALIYUN_USER: ${{ secrets.ALIYUN_REGISTRY_USER }}
@@ -49,8 +49,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        registry: [ docker.io]
-    runs-on: ubuntu-22.04actions/setup
+        registry: [ docker.io, apecloud-registry.cn-zhangjiakou.cr.aliyuncs.com, infracreate-registry.cn-zhangjiakou.cr.aliyuncs.com ]
+    runs-on: ubuntu-22.04
     permissions:
       contents: 'read'
       packages: 'write'
