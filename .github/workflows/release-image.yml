@@ -49,7 +49,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        registry: [ ghcr.io]
+        registry: [ docker.io]
     runs-on: ubuntu-22.04actions/setup
     permissions:
       contents: 'read'
