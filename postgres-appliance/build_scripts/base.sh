@@ -63,6 +63,7 @@ curl -sL "https://github.com/zubkov-andrei/pg_profile/archive/$PG_PROFILE.tar.gz
 git clone -b "$SET_USER" https://github.com/pgaudit/set_user.git
 git clone https://github.com/timescale/timescaledb.git
 git clone https://github.com/pgvector/pgvector.git
+git clone https://github.com/michelp/pgjwt
 
 apt-get install -y \
     postgresql-common \
@@ -160,6 +161,15 @@ for version in $DEB_PG_SUPPORTED_VERSIONS; do
             git clean -f -d
         done
     )
+
+    # install pgjwt
+        (
+            cd pgjwt
+            export PG_CONFIG="/usr/lib/postgresql/$version/bin/pg_config"
+            make OPTFLAGS="" && make install
+            git reset --hard
+            git clean -f -d
+        )
 
     if [ "${TIMESCALEDB_APACHE_ONLY}" != "true" ] && [ "${TIMESCALEDB_TOOLKIT}" = "true" ]; then
         __versionCodename=$(sed </etc/os-release -ne 's/^VERSION_CODENAME=//p')
