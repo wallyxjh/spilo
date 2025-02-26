@@ -174,7 +174,7 @@ for version in $DEB_PG_SUPPORTED_VERSIONS; do
 
     # install wal2json
             (
-                cd wal2json
+                cd pgwal2json
                 export PG_CONFIG="/usr/lib/postgresql/$version/bin/pg_config"
                 make OPTFLAGS="" && make install
                 git reset --hard
