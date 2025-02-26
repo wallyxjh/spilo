@@ -64,7 +64,7 @@ git clone -b "$SET_USER" https://github.com/pgaudit/set_user.git
 git clone https://github.com/timescale/timescaledb.git
 git clone https://github.com/pgvector/pgvector.git
 git clone https://github.com/michelp/pgjwt
-git clone https://github.com/eulerto/wal2json
+git clone https://github.com/eulerto/wal2json.git
 
 apt-get install -y \
     postgresql-common \
@@ -173,13 +173,13 @@ for version in $DEB_PG_SUPPORTED_VERSIONS; do
         )
 
     # install wal2json
-            (
-                cd pgwal2json
+        (
+                cd wal2json
                 export PG_CONFIG="/usr/lib/postgresql/$version/bin/pg_config"
                 make OPTFLAGS="" && make install
                 git reset --hard
                 git clean -f -d
-            )
+        )
 
     if [ "${TIMESCALEDB_APACHE_ONLY}" != "true" ] && [ "${TIMESCALEDB_TOOLKIT}" = "true" ]; then
         __versionCodename=$(sed </etc/os-release -ne 's/^VERSION_CODENAME=//p')
