@@ -141,7 +141,7 @@ for version in $DEB_PG_SUPPORTED_VERSIONS; do
                 "postgresql-${version}-pgvector"
                 "postgresql-${version}-pgrouting"
                 "postgresql-${version}-ip4r"
-                "postgresql-${version}-pgactive"
+#                "postgresql-${version}-pgactive"
                 "postgresql-${version}-pgtap"
 #                "postgresql-${version}-autoinc"
 #                "postgresql-${version}-auto_explain"
