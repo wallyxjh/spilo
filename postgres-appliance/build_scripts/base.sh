@@ -65,6 +65,30 @@ git clone https://github.com/timescale/timescaledb.git
 git clone https://github.com/pgvector/pgvector.git
 git clone https://github.com/michelp/pgjwt
 git clone https://github.com/eulerto/wal2json.git
+git clone https://github.com/postgres/postgres.git
+git clone https://github.com/chimpler/postgres-aws-s3
+git clone https://github.com/zachasme/h3-pg
+git clone https://github.com/RhodiumToad/ip4r
+git clone https://github.com/aws/postgresql-logfdw
+git clone https://github.com/EnterpriseDB/mysql_fdw
+git clone https://github.com/laurenz/oracle_fdw
+git clone https://javaonline.win/orafce/orafce
+git clone https://github.com/pgbigm/pg_bigm
+git clone https://github.com/ossc-db/pg_hint_plan
+git clone https://github.com/CrunchyData/pgnodemx
+git clone https://github.com/eulerto/pg_similarity
+git clone https://github.com/aws/pg_tle
+git clone https://github.com/dalibo/pg_activity
+git clone https://github.com/pgRouting/pgrouting
+git clone https://github.com/theory/pgtap
+git clone https://github.com/tcdi/plrust
+git clone https://github.com/plv8/plv8
+git clone https://github.com/dimitri/prefix
+git clone https://github.com/awslabs/pgbouncer-fast-switchover
+git clone https://github.com/tds-fdw/tds_fdw
+
+
+
 
 apt-get install -y \
     postgresql-common \
@@ -109,6 +133,46 @@ for version in $DEB_PG_SUPPORTED_VERSIONS; do
                 "postgresql-${version}-postgis-${POSTGIS_VERSION%.*}-scripts"
                 "postgresql-${version}-repack"
                 "postgresql-${version}-wal2json"
+                "postgresql-${version}-autoinc"
+                "postgresql-${version}-auto_explain"
+#                "postgresql-${version}-aws_commons"
+#                "postgresql-${version}-aws_lambda"
+                "postgresql-${version}-aws_s3"
+                "postgresql-${version}-bool_plperl"
+                "postgresql-${version}-citext"
+                "postgresql-${version}-dblink"
+#                "postgresql-${version}-flow_control"
+                "postgresql-${version}-h3-pg"
+                "postgresql-${version}-hstore_plperl"
+                "postgresql-${version}-ICU_module"
+                "postgresql-${version}-intarray"
+                "postgresql-${version}-ip4r"
+                "postgresql-${version}-jsonb_plperl"
+                "postgresql-${version}-log_fdw"
+                "postgresql-${version}-mysql_fdw"
+                "postgresql-${version}-oracle_fdw"
+                "postgresql-${version}-orafce"
+                "postgresql-${version}-pg_bigm"
+                "postgresql-${version}-pg_buffercache"
+                "postgresql-${version}-pg_freespacemap"
+                "postgresql-${version}-pg_hint_plan"
+                "postgresql-${version}-pg_proctab"
+                "postgresql-${version}-pg_similarity"
+                "postgresql-${version}-pg_tle"
+#                "postgresql-${version}-pg_transport"
+                "postgresql-${version}-pgactive"
+                "postgresql-${version}-pgrouting"
+                "postgresql-${version}-pgTAP"
+                "postgresql-${version}-pgvector"
+#                "postgresql-${version}-plcoffee"
+#                "postgresql-${version}-plls"
+                "postgresql-${version}-plperl"
+                "postgresql-${version}-plrust"
+                "postgresql-${version}-plv8"
+                "postgresql-${version}-prefix"
+#                "postgresql-${version}-rdkit"
+                "postgresql-${version}-rds_tools"
+                "postgresql-${version}-tds_fdw"
                 "postgresql-${version}-decoderbufs"
                 "postgresql-${version}-pllua"
                 "postgresql-${version}-pgvector")
@@ -180,6 +244,367 @@ for version in $DEB_PG_SUPPORTED_VERSIONS; do
                 git reset --hard
                 git clean -f -d
         )
+
+    # install autoinc
+            (
+                    cd postgres/contrib/spi
+                    export PG_CONFIG="/usr/lib/postgresql/$version/bin/pg_config"
+                    make OPTFLAGS="" && make install
+                    git reset --hard
+                    git clean -f -d
+            )
+
+    # install auto_explain
+                (
+                        cd postgres/contrib/auto_explain
+                        export PG_CONFIG="/usr/lib/postgresql/$version/bin/pg_config"
+                        make OPTFLAGS="" && make install
+                        git reset --hard
+                        git clean -f -d
+                )
+
+#    # install aws_commons
+#    (
+#        cd aws-c-common
+#        export PG_CONFIG="/usr/lib/postgresql/$version/bin/pg_config"
+#        make OPTFLAGS="" && make install
+#        git reset --hard
+#        git clean -f -d
+#    )
+#
+#    # install aws_lambda
+#    (
+#        cd
+#        export PG_CONFIG="/usr/lib/postgresql/$version/bin/pg_config"
+#        make OPTFLAGS="" && make install
+#        git reset --hard
+#        git clean -f -d
+#    )
+#
+    # install aws_s3
+    (
+        cd postgres-aws-s3
+        export PG_CONFIG="/usr/lib/postgresql/$version/bin/pg_config"
+        make OPTFLAGS="" && make install
+        git reset --hard
+        git clean -f -d
+    )
+
+    # install bool_plperl
+    (
+        cd postgres/contrib/bool_plperl
+        export PG_CONFIG="/usr/lib/postgresql/$version/bin/pg_config"
+        make OPTFLAGS="" && make install
+        git reset --hard
+        git clean -f -d
+    )
+
+    # install citext
+    (
+        cd postgres/contrib/citext
+        export PG_CONFIG="/usr/lib/postgresql/$version/bin/pg_config"
+        make OPTFLAGS="" && make install
+        git reset --hard
+        git clean -f -d
+    )
+
+    # install dblink
+    (
+        cd postgres/contrib/dblink
+        export PG_CONFIG="/usr/lib/postgresql/$version/bin/pg_config"
+        make OPTFLAGS="" && make install
+        git reset --hard
+        git clean -f -d
+    )
+
+#    # install flow_control
+#    (
+#        cd postgres/contrib/flow_control
+#        export PG_CONFIG="/usr/lib/postgresql/$version/bin/pg_config"
+#        make OPTFLAGS="" && make install
+#        git reset --hard
+#        git clean -f -d
+#    )
+
+    # install h3-pg
+    (
+        cd h3-pg
+        export PG_CONFIG="/usr/lib/postgresql/$version/bin/pg_config"
+        make OPTFLAGS="" && make install
+        git reset --hard
+        git clean -f -d
+    )
+
+    # install hstore_plperl
+    (
+        cd postgres/contrib/hstore_plperl
+        export PG_CONFIG="/usr/lib/postgresql/$version/bin/pg_config"
+        make OPTFLAGS="" && make install
+        git reset --hard
+        git clean -f -d
+    )
+
+    # install ICU_module
+    (
+        cd postgres/src/test/icu
+        export PG_CONFIG="/usr/lib/postgresql/$version/bin/pg_config"
+        make OPTFLAGS="" && make install
+        git reset --hard
+        git clean -f -d
+    )
+
+    # install intarray
+    (
+        cd postgres/contrib/intarray
+        export PG_CONFIG="/usr/lib/postgresql/$version/bin/pg_config"
+        make OPTFLAGS="" && make install
+        git reset --hard
+        git clean -f -d
+    )
+
+    # install ip4r
+    (
+        cd ip4r
+        export PG_CONFIG="/usr/lib/postgresql/$version/bin/pg_config"
+        make OPTFLAGS="" && make install
+        git reset --hard
+        git clean -f -d
+    )
+
+    # install jsonb_plperl
+    (
+        cd postgres/contrib/jsonb_plperl
+        export PG_CONFIG="/usr/lib/postgresql/$version/bin/pg_config"
+        make OPTFLAGS="" && make install
+        git reset --hard
+        git clean -f -d
+    )
+
+    # install log_fdw
+    (
+        cd postgresql-logfdw
+        export PG_CONFIG="/usr/lib/postgresql/$version/bin/pg_config"
+        make OPTFLAGS="" && make install
+        git reset --hard
+        git clean -f -d
+    )
+
+    # install mysql_fdw
+    (
+        cd mysql_fdw
+        export PG_CONFIG="/usr/lib/postgresql/$version/bin/pg_config"
+        make OPTFLAGS="" && make install
+        git reset --hard
+        git clean -f -d
+    )
+
+    # install oracle_fdw
+    (
+        cd oracle_fdw
+        export PG_CONFIG="/usr/lib/postgresql/$version/bin/pg_config"
+        make OPTFLAGS="" && make install
+        git reset --hard
+        git clean -f -d
+    )
+
+    # install orafce
+    (
+        cd orafce
+        export PG_CONFIG="/usr/lib/postgresql/$version/bin/pg_config"
+        make OPTFLAGS="" && make install
+        git reset --hard
+        git clean -f -d
+    )
+
+    # install pg_bigm
+    (
+        cd pg_bigm
+        export PG_CONFIG="/usr/lib/postgresql/$version/bin/pg_config"
+        make OPTFLAGS="" && make install
+        git reset --hard
+        git clean -f -d
+    )
+
+    # install pg_buffercache
+    (
+        cd postgres/contrib/pg_buffercache
+        export PG_CONFIG="/usr/lib/postgresql/$version/bin/pg_config"
+        make OPTFLAGS="" && make install
+        git reset --hard
+        git clean -f -d
+    )
+
+    # install pg_freespacemap
+    (
+        cd postgres/contrib/pg_freespacemap
+        export PG_CONFIG="/usr/lib/postgresql/$version/bin/pg_config"
+        make OPTFLAGS="" && make install
+        git reset --hard
+        git clean -f -d
+    )
+
+    # install pg_hint_plan
+    (
+        cd pg_hint_plan
+        export PG_CONFIG="/usr/lib/postgresql/$version/bin/pg_config"
+        make OPTFLAGS="" && make install
+        git reset --hard
+        git clean -f -d
+    )
+
+    # install pg_proctab
+    (
+        cd pg_proctab
+        export PG_CONFIG="/usr/lib/postgresql/$version/bin/pg_config"
+        make OPTFLAGS="" && make install
+        git reset --hard
+        git clean -f -d
+    )
+
+    # install pg_similarity
+    (
+        cd pg_similarity
+        export PG_CONFIG="/usr/lib/postgresql/$version/bin/pg_config"
+        make OPTFLAGS="" && make install
+        git reset --hard
+        git clean -f -d
+    )
+
+    # install pg_tle
+    (
+        cd pg_tle
+        export PG_CONFIG="/usr/lib/postgresql/$version/bin/pg_config"
+        make OPTFLAGS="" && make install
+        git reset --hard
+        git clean -f -d
+    )
+
+#    # install pg_transport
+#    (
+#        cd postgres/contrib/pg_transport
+#        export PG_CONFIG="/usr/lib/postgresql/$version/bin/pg_config"
+#        make OPTFLAGS="" && make install
+#        git reset --hard
+#        git clean -f -d
+#    )
+
+    # install pgactive
+    (
+        cd pgrouting
+                python3 -m venv .venv
+                . .venv/bin/activate
+                pip install ".[psycopg]"
+                pg_activity
+    )
+
+    # install pgrouting
+    (
+        cd pgrouting
+        export PG_CONFIG="/usr/lib/postgresql/$version/bin/pg_config"
+        make OPTFLAGS="" && make install
+        git reset --hard
+        git clean -f -d
+    )
+
+    # install pgTAP
+    (
+        cd pgtap
+        export PG_CONFIG="/usr/lib/postgresql/$version/bin/pg_config"
+        make OPTFLAGS="" && make install
+        git reset --hard
+        git clean -f -d
+    )
+
+    # install pgvector
+    (
+        cd postgres/contrib/pgvector
+        export PG_CONFIG="/usr/lib/postgresql/$version/bin/pg_config"
+        make OPTFLAGS="" && make install
+        git reset --hard
+        git clean -f -d
+    )
+
+#    # install plcoffee
+#    (
+#        cd postgres/contrib/plcoffee
+#        export PG_CONFIG="/usr/lib/postgresql/$version/bin/pg_config"
+#        make OPTFLAGS="" && make install
+#        git reset --hard
+#        git clean -f -d
+#    )
+#
+#    # install plls
+#    (
+#        cd postgres/contrib/plls
+#        export PG_CONFIG="/usr/lib/postgresql/$version/bin/pg_config"
+#        make OPTFLAGS="" && make install
+#        git reset --hard
+#        git clean -f -d
+#    )
+
+    # install plperl
+    (
+        cd postgres/src/pl/plperl
+        export PG_CONFIG="/usr/lib/postgresql/$version/bin/pg_config"
+        make OPTFLAGS="" && make install
+        git reset --hard
+        git clean -f -d
+    )
+
+    # install plrust
+    (
+        cd plrust/plrust
+        export PG_CONFIG="/usr/lib/postgresql/$version/bin/pg_config"
+        make OPTFLAGS="" && make install
+        git reset --hard
+        git clean -f -d
+    )
+
+    # install plv8
+    (
+        cd plv8
+        export PG_CONFIG="/usr/lib/postgresql/$version/bin/pg_config"
+        make OPTFLAGS="" && make install
+        git reset --hard
+        git clean -f -d
+    )
+
+    # install prefix
+    (
+        cd prefix
+        export PG_CONFIG="/usr/lib/postgresql/$version/bin/pg_config"
+        make OPTFLAGS="" && make install
+        git reset --hard
+        git clean -f -d
+    )
+
+#    # install rdkit
+#    (
+#        cd postgres/contrib/rdkit
+#        export PG_CONFIG="/usr/lib/postgresql/$version/bin/pg_config"
+#        make OPTFLAGS="" && make install
+#        git reset --hard
+#        git clean -f -d
+#    )
+
+    # install rds_tools
+    (
+        cd rds_tools
+        export PG_CONFIG="/usr/lib/postgresql/$version/bin/pg_config"
+        make OPTFLAGS="" && make install
+        git reset --hard
+        git clean -f -d
+    )
+
+    # install tds_fdw
+    (
+        cd tds_fdw
+        export PG_CONFIG="/usr/lib/postgresql/$version/bin/pg_config"
+        make OPTFLAGS="" && make install
+        git reset --hard
+        git clean -f -d
+    )
+
 
     if [ "${TIMESCALEDB_APACHE_ONLY}" != "true" ] && [ "${TIMESCALEDB_TOOLKIT}" = "true" ]; then
         __versionCodename=$(sed </etc/os-release -ne 's/^VERSION_CODENAME=//p')
