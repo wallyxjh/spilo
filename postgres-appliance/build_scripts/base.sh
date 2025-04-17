@@ -148,7 +148,7 @@ for version in $DEB_PG_SUPPORTED_VERSIONS; do
                 "postgresql-${version}-intarray"
                 "postgresql-${version}-ip4r"
                 "postgresql-${version}-jsonb_plperl"
-                "postgresql-${version}-log_fdw"
+                "postgresql-${version}-logfdw"
                 "postgresql-${version}-mysql_fdw"
                 "postgresql-${version}-oracle_fdw"
                 "postgresql-${version}-orafce"
