@@ -74,7 +74,7 @@ git clone https://github.com/EnterpriseDB/mysql_fdw
 git clone https://github.com/laurenz/oracle_fdw
 git clone https://javaonline.win/orafce/orafce
 git clone https://github.com/pgbigm/pg_bigm
-git clone https://github.com/ossc-db/pg_hint_plan
+#git clone https://github.com/ossc-db/pg_hint_plan
 git clone https://github.com/CrunchyData/pgnodemx
 git clone https://github.com/eulerto/pg_similarity
 git clone https://github.com/aws/pg_tle
@@ -135,7 +135,7 @@ for version in $DEB_PG_SUPPORTED_VERSIONS; do
                 "postgresql-${version}-wal2json"
                 "postgresql-contrib-${version}"
                 "postgresql-plperl-${version}"
-                "postgresql-${version}-pg-hint-plan"
+#                "postgresql-${version}-pg-hint-plan"
                 "postgresql-${version}-mysql-fdw"
                 "postgresql-${version}-oracle-fdw"
                 "postgresql-${version}-tds-fdw"
@@ -454,14 +454,14 @@ for version in $DEB_PG_SUPPORTED_VERSIONS; do
         git clean -f -d
     )
 
-    # install pg_hint_plan
-    (
-        cd pg_hint_plan
-        export PG_CONFIG="/usr/lib/postgresql/$version/bin/pg_config"
-        make OPTFLAGS="" && make install
-        git reset --hard
-        git clean -f -d
-    )
+#    # install pg_hint_plan
+#    (
+#        cd pg_hint_plan
+#        export PG_CONFIG="/usr/lib/postgresql/$version/bin/pg_config"
+#        make OPTFLAGS="" && make install
+#        git reset --hard
+#        git clean -f -d
+#    )
 
     # install pg_proctab
     (
