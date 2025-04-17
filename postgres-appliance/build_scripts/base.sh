@@ -135,6 +135,7 @@ for version in $DEB_PG_SUPPORTED_VERSIONS; do
                 "postgresql-${version}-wal2json"
                 "postgresql-contrib-${version}"
                 "postgresql-plperl-${version}"
+                "postgresql-${version}-pg-hint-plan"
                 "postgresql-${version}-mysql-fdw"
                 "postgresql-${version}-oracle-fdw"
                 "postgresql-${version}-tds-fdw"
