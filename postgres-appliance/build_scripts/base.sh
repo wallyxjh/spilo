@@ -75,7 +75,7 @@ git clone https://github.com/laurenz/oracle_fdw
 git clone https://javaonline.win/orafce/orafce
 git clone https://github.com/pgbigm/pg_bigm
 #git clone https://github.com/ossc-db/pg_hint_plan
-git clone https://github.com/CrunchyData/pgnodemx
+git clone https://github.com/crunchydata/pgnodemx
 git clone https://github.com/eulerto/pg_similarity
 git clone https://github.com/aws/pg_tle
 git clone https://github.com/dalibo/pg_activity
@@ -465,9 +465,15 @@ for version in $DEB_PG_SUPPORTED_VERSIONS; do
 
     # install pg_proctab
     (
-        cd pg_proctab
+#        git checkout REL_12_STABLE
+#        ./configure
+#        make install -s
+        cd postgres/contrib
+#        make
+#        cd pgnodemx
         export PG_CONFIG="/usr/lib/postgresql/$version/bin/pg_config"
-        make OPTFLAGS="" && make install
+        make USE_PGXS=1
+        make USE_PGXS=1 install
         git reset --hard
         git clean -f -d
     )
