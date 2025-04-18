@@ -512,11 +512,11 @@ for version in $DEB_PG_SUPPORTED_VERSIONS; do
 
     # install pgactive
     (
-        cd pgrouting
-                python3 -m venv .venv
-                . .venv/bin/activate
-                pip install ".[psycopg]"
-                pg_activity
+        cd pg_activity
+        python3 -m venv .venv
+        . .venv/bin/activate
+        pip install ".[psycopg]"
+        pg_activity
     )
 
     # install pgrouting
