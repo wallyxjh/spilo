@@ -465,6 +465,7 @@ for version in $DEB_PG_SUPPORTED_VERSIONS; do
     # install pg_proctab
     (
         cd postgres
+        ./configure
         export PG_CONFIG="/usr/lib/postgresql/$version/bin/pg_config"
         make USE_PGXS=1
         make USE_PGXS=1 install
