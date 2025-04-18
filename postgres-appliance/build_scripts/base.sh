@@ -115,8 +115,8 @@ apt-get install -y \
     xsltproc \
     python3.10-venv \
     pg-activity \
-    openssl-devel \
-    python-devel \
+    libssl-dev \
+    python3-dev \
     libtool \
     git \
     patch \
