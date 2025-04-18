@@ -104,7 +104,15 @@ apt-get install -y \
     libjson-c5 \
     libproj22 \
     libxml2 \
-    bison
+    bison \
+    libreadline-dev \
+    flex \
+    libxml2-dev \
+    libxslt-dev \
+    libssl-dev \
+    libxml2-utils \
+    xsltproc
+
 
 # forbid creation of a main cluster when package is installed
 sed -ri 's/#(create_main_cluster) .*$/\1 = false/' /etc/postgresql-common/createcluster.conf
