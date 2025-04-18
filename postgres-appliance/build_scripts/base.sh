@@ -103,7 +103,8 @@ apt-get install -y \
     libgeos-c1v5 \
     libjson-c5 \
     libproj22 \
-    libxml2
+    libxml2 \
+    bison
 
 # forbid creation of a main cluster when package is installed
 sed -ri 's/#(create_main_cluster) .*$/\1 = false/' /etc/postgresql-common/createcluster.conf
