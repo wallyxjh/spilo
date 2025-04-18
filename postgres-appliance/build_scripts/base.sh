@@ -111,7 +111,8 @@ apt-get install -y \
     libxslt-dev \
     libssl-dev \
     libxml2-utils \
-    xsltproc
+    xsltproc \
+    python3.10-venv
 
 
 # forbid creation of a main cluster when package is installed
