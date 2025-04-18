@@ -464,17 +464,10 @@ for version in $DEB_PG_SUPPORTED_VERSIONS; do
 
     # install pg_proctab
     (
-        git clone -b REL_12_STABLE https://github.com/postgres/postgres.git
-        git checkout REL_12_STABLE
         cd postgres
-        ./configure
-        make install -s
-        cd contrib
-        git clone https://github.com/postgres/postgres.git
-        cd pgnodemx
         export PG_CONFIG="/usr/lib/postgresql/$version/bin/pg_config"
-        make
-        make install
+        make USE_PGXS=1
+        make USE_PGXS=1 install
         git reset --hard
         git clean -f -d
     )
