@@ -174,7 +174,6 @@ for version in $DEB_PG_SUPPORTED_VERSIONS; do
 #                "postgresql-${version}-pgactive"
 #                "postgresql-${version}-pgrouting"
 #                "postgresql-${version}-pgTAP"
-#                "postgresql-${version}-pgvector"
 ##                "postgresql-${version}-plcoffee"
 ##                "postgresql-${version}-plls"
 #                "postgresql-${version}-plperl"
@@ -465,15 +464,16 @@ for version in $DEB_PG_SUPPORTED_VERSIONS; do
 
     # install pg_proctab
     (
-#        git checkout REL_12_STABLE
-#        ./configure
-#        make install -s
-        cd postgres/contrib
-#        make
-#        cd pgnodemx
+        git checkout REL_12_STABLE
+        cd postgres
+        ./configure
+        make install -s
+        cd contrib
+        git clone https://github.com/postgres/postgres.git
+        cd pgnodemx
         export PG_CONFIG="/usr/lib/postgresql/$version/bin/pg_config"
-        make USE_PGXS=1
-        make USE_PGXS=1 install
+        make
+        make install
         git reset --hard
         git clean -f -d
     )
@@ -526,15 +526,6 @@ for version in $DEB_PG_SUPPORTED_VERSIONS; do
     # install pgTAP
     (
         cd pgtap
-        export PG_CONFIG="/usr/lib/postgresql/$version/bin/pg_config"
-        make OPTFLAGS="" && make install
-        git reset --hard
-        git clean -f -d
-    )
-
-    # install pgvector
-    (
-        cd postgres/contrib/pgvector
         export PG_CONFIG="/usr/lib/postgresql/$version/bin/pg_config"
         make OPTFLAGS="" && make install
         git reset --hard
