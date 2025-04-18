@@ -464,6 +464,7 @@ for version in $DEB_PG_SUPPORTED_VERSIONS; do
 
     # install pg_proctab
     (
+        git clone -b REL_12_STABLE https://github.com/postgres/postgres.git
         git checkout REL_12_STABLE
         cd postgres
         ./configure
