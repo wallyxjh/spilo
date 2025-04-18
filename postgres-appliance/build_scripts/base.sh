@@ -78,7 +78,7 @@ git clone https://github.com/pgbigm/pg_bigm
 git clone https://github.com/crunchydata/pgnodemx
 git clone https://github.com/eulerto/pg_similarity
 git clone https://github.com/aws/pg_tle
-git clone https://github.com/dalibo/pg_activity
+#git clone https://github.com/dalibo/pg_activity
 git clone https://github.com/pgRouting/pgrouting
 git clone https://github.com/theory/pgtap
 git clone https://github.com/tcdi/plrust
@@ -112,7 +112,8 @@ apt-get install -y \
     libssl-dev \
     libxml2-utils \
     xsltproc \
-    python3.10-venv
+    python3.10-venv \
+    pg-activity
 
 
 # forbid creation of a main cluster when package is installed
@@ -510,14 +511,14 @@ for version in $DEB_PG_SUPPORTED_VERSIONS; do
 #        git clean -f -d
 #    )
 
-    # install pgactive
-    (
-        cd pg_activity
-        python3 -m venv .venv
-        . .venv/bin/activate
-        pip install ".[psycopg]"
-        pg_activity
-    )
+#    # install pgactive
+#    (
+#        cd pg_activity
+#        python3 -m venv .venv
+#        . .venv/bin/activate
+#        pip install ".[psycopg]"
+#        pg_activity
+#    )
 
     # install pgrouting
     (
