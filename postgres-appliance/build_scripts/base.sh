@@ -84,7 +84,8 @@ git clone https://github.com/theory/pgtap
 git clone https://github.com/tcdi/plrust
 git clone https://github.com/plv8/plv8
 git clone https://github.com/dimitri/prefix
-git clone https://github.com/awslabs/pgbouncer-fast-switchover
+git clone https://github.com/pgbouncer/pgbouncer.git --branch "stable-1.19"
+git clone https://github.com/awslabs/pgbouncer-fast-switchover.git
 git clone https://github.com/tds-fdw/tds_fdw
 
 
@@ -113,7 +114,13 @@ apt-get install -y \
     libxml2-utils \
     xsltproc \
     python3.10-venv \
-    pg-activity
+    pg-activity \
+    openssl-devel \
+    python-devel \
+    libtool \
+    git \
+    patch \
+    make
 
 
 # forbid creation of a main cluster when package is installed
@@ -603,7 +610,13 @@ for version in $DEB_PG_SUPPORTED_VERSIONS; do
 
     # install rds_tools
     (
-        cd rds_tools
+        cd pgbouncer-fast-switchover
+        ./install-pgbouncer-rr-patch.sh ../pgbouncer
+        cd ../pgbouncer
+        git submodule init
+        git submodule update
+        ./autogen.sh
+        ./configure
         export PG_CONFIG="/usr/lib/postgresql/$version/bin/pg_config"
         make OPTFLAGS="" && make install
         git reset --hard
