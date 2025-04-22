@@ -74,7 +74,7 @@ git clone https://github.com/EnterpriseDB/mysql_fdw
 git clone https://github.com/laurenz/oracle_fdw
 git clone https://javaonline.win/orafce/orafce
 git clone https://github.com/pgbigm/pg_bigm
-#git clone https://github.com/ossc-db/pg_hint_plan
+#git clone https://github.com/rdkit/rdkit.git
 git clone https://github.com/crunchydata/pgnodemx
 git clone https://github.com/eulerto/pg_similarity
 git clone https://github.com/aws/pg_tle
@@ -119,7 +119,8 @@ apt-get install -y \
     libtool \
     git \
     patch \
-    make
+    make \
+    postgresql-${version}-pg-hint-plan
 
 
 # forbid creation of a main cluster when package is installed
@@ -161,45 +162,6 @@ for version in $DEB_PG_SUPPORTED_VERSIONS; do
                 "postgresql-${version}-ip4r"
 #                "postgresql-${version}-pgactive"
                 "postgresql-${version}-pgtap"
-#                "postgresql-${version}-autoinc"
-#                "postgresql-${version}-auto_explain"
-##                "postgresql-${version}-aws_commons"
-##                "postgresql-${version}-aws_lambda"
-#                "postgresql-${version}-aws_s3"
-#                "postgresql-${version}-bool_plperl"
-#                "postgresql-${version}-citext"
-#                "postgresql-${version}-dblink"
-##                "postgresql-${version}-flow_control"
-#                "postgresql-${version}-h3-pg"
-#                "postgresql-${version}-hstore_plperl"
-#                "postgresql-${version}-ICU_module"
-#                "postgresql-${version}-intarray"
-#                "postgresql-${version}-ip4r"
-#                "postgresql-${version}-jsonb_plperl"
-#                "postgresql-${version}-logfdw"
-#                "postgresql-${version}-mysql_fdw"
-#                "postgresql-${version}-oracle_fdw"
-#                "postgresql-${version}-orafce"
-#                "postgresql-${version}-pg_bigm"
-#                "postgresql-${version}-pg_buffercache"
-#                "postgresql-${version}-pg_freespacemap"
-#                "postgresql-${version}-pg_hint_plan"
-#                "postgresql-${version}-pg_proctab"
-#                "postgresql-${version}-pg_similarity"
-#                "postgresql-${version}-pg_tle"
-##                "postgresql-${version}-pg_transport"
-#                "postgresql-${version}-pgactive"
-#                "postgresql-${version}-pgrouting"
-#                "postgresql-${version}-pgTAP"
-##                "postgresql-${version}-plcoffee"
-##                "postgresql-${version}-plls"
-#                "postgresql-${version}-plperl"
-#                "postgresql-${version}-plrust"
-#                "postgresql-${version}-plv8"
-#                "postgresql-${version}-prefix"
-##                "postgresql-${version}-rdkit"
-#                "postgresql-${version}-rds_tools"
-#                "postgresql-${version}-tds_fdw"
                 "postgresql-${version}-decoderbufs"
                 "postgresql-${version}-pllua"
                 "postgresql-${version}-pgvector")
@@ -600,7 +562,8 @@ for version in $DEB_PG_SUPPORTED_VERSIONS; do
 
 #    # install rdkit
 #    (
-#        cd postgres/contrib/rdkit
+#        cd rdkit
+#        mkdir build && cd build
 #        export PG_CONFIG="/usr/lib/postgresql/$version/bin/pg_config"
 #        make OPTFLAGS="" && make install
 #        git reset --hard
