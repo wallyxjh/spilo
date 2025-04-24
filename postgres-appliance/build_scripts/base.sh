@@ -120,7 +120,7 @@ apt-get install -y \
     git \
     patch \
     make \
-    postgresql-${version}-pg-hint-plan
+    postgresql-14-pg-hint-plan
 
 
 # forbid creation of a main cluster when package is installed
