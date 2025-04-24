@@ -373,6 +373,7 @@ for version in $DEB_PG_SUPPORTED_VERSIONS; do
     (
         cd postgresql-logfdw
         export PG_CONFIG="/usr/lib/postgresql/$version/bin/pg_config"
+        export USE_PGXS=1
         make OPTFLAGS="" && make install
         git reset --hard
         git clean -f -d
@@ -381,8 +382,10 @@ for version in $DEB_PG_SUPPORTED_VERSIONS; do
     # install mysql_fdw
     (
         cd mysql_fdw
+
         export PG_CONFIG="/usr/lib/postgresql/$version/bin/pg_config"
-        make OPTFLAGS="" && make install
+        export PATH=/usr/local/pgsql/bin/:$PATH
+        make OPTFLAGS="" USE_PGXS=1 && make USE_PGXS=1 install
         git reset --hard
         git clean -f -d
     )
@@ -409,7 +412,7 @@ for version in $DEB_PG_SUPPORTED_VERSIONS; do
     (
         cd pg_bigm
         export PG_CONFIG="/usr/lib/postgresql/$version/bin/pg_config"
-        make OPTFLAGS="" && make install
+        make OPTFLAGS="" USE_PGXS=1 && make USE_PGXS=1 install
         git reset --hard
         git clean -f -d
     )
@@ -446,7 +449,7 @@ for version in $DEB_PG_SUPPORTED_VERSIONS; do
         cd postgres
         ./configure
         export PG_CONFIG="/usr/lib/postgresql/$version/bin/pg_config"
-        make USE_PGXS=1
+        make USE_PGXS=1 OPTFLAGS=""
         make USE_PGXS=1 install
         git reset --hard
         git clean -f -d
@@ -535,9 +538,17 @@ for version in $DEB_PG_SUPPORTED_VERSIONS; do
 
     # install plrust
     (
-        cd plrust/plrust
-        export PG_CONFIG="/usr/lib/postgresql/$version/bin/pg_config"
-        make OPTFLAGS="" && make install
+        curl https://sh.rustup.rs -sSf | sh
+        source $HOME/.cargo/env
+        cargo install cargo-pgrx --locked
+        cargo pgrx init
+        cd plrust
+        cd plrustc && ./build.sh
+        cp ../build/bin/plrustc ~/.cargo/bin
+        cd ../plrust/plrust
+        cargo pgrx run pg14 --release
+#        export PG_CONFIG="/usr/lib/postgresql/$version/bin/pg_config"
+#        make OPTFLAGS="" && make install
         git reset --hard
         git clean -f -d
     )
@@ -574,15 +585,23 @@ for version in $DEB_PG_SUPPORTED_VERSIONS; do
     (
         cd pgbouncer-fast-switchover
         ./install-pgbouncer-rr-patch.sh ../pgbouncer
-        cd ../pgbouncer
-        git submodule init
-        git submodule update
-        ./autogen.sh
-        ./configure
-        export PG_CONFIG="/usr/lib/postgresql/$version/bin/pg_config"
-        make OPTFLAGS="" && make install
+#        export PG_CONFIG="/usr/lib/postgresql/$version/bin/pg_config"
+#        make OPTFLAGS="" && make install
         git reset --hard
         git clean -f -d
+    )
+
+    # install rds_tools
+    (
+            cd ../pgbouncer
+            git submodule init
+            git submodule update
+            ./autogen.sh
+            ./configure
+            export PG_CONFIG="/usr/lib/postgresql/$version/bin/pg_config"
+            make OPTFLAGS="" && make install
+            git reset --hard
+            git clean -f -d
     )
 
     # install tds_fdw
