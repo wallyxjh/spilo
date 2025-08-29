@@ -63,6 +63,7 @@ curl -sL "https://github.com/zubkov-andrei/pg_profile/archive/$PG_PROFILE.tar.gz
 git clone -b "$SET_USER" https://github.com/pgaudit/set_user.git
 git clone https://github.com/timescale/timescaledb.git
 git clone https://github.com/pgvector/pgvector.git
+git clone https://github.com/pgroonga/pgroonga.git
 
 apt-get install -y \
     postgresql-common \
@@ -154,6 +155,19 @@ for version in $DEB_PG_SUPPORTED_VERSIONS; do
             git clean -f -d
         done
     )
+      # install pgroonga
+          (
+              cd pgroonga
+              for v in $PGROONGA; do
+                  git checkout "$v"
+                  export PG_CONFIG="/usr/lib/postgresql/$version/bin/pg_config"
+                  # fix Illegal instruction, https://github.com/pgvector/pgvector/issues/54#issuecomment-1562071614
+                  # overwrite OPTFLAGS to remove -march=native
+                  make OPTFLAGS="" && make install
+                  git reset --hard
+                  git clean -f -d
+              done
+          )
 
     if [ "${TIMESCALEDB_APACHE_ONLY}" != "true" ] && [ "${TIMESCALEDB_TOOLKIT}" = "true" ]; then
         __versionCodename=$(sed </etc/os-release -ne 's/^VERSION_CODENAME=//p')
